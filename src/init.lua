@@ -85,7 +85,11 @@ local function class(name, ...)
 		end
 	}
 
-	return class
+	return setmetatable(class, {
+		__call = function(self, ...)
+			return self.new and self.new(...)
+		end
+	})
 end
 
 return class
