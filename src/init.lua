@@ -56,15 +56,19 @@ local function create(baseTable, class)
 	for _, superClass in ipairs(class.extends or {}) do
 		extendClass(superClass)
 	end
-	for _, superClass in ipairs((baseTable and baseTable._extends) or {}) do
-		extendClass(superClass)
-	end
 
 	for member, value in pairs(class) do
 		metaTable[member] = value
 	end
-	for member, value in pairs((baseTable and baseTable._base) or {}) do
-		metaTable[member] = value
+	
+	if baseTable and not baseTable._disableInternal then
+		for member, value in pairs(baseTable._base or {}) do
+			metaTable[member] = value
+		end
+		
+		for _, superClass in ipairs(baseTable._extends or {}) do
+			extendClass(superClass)
+		end
 	end
 
 	return setmetatable(baseTable or {}, metaTable)
