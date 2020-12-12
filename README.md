@@ -85,7 +85,7 @@ function MyClass.new(name)
 	return self
 end
 ```
-**My class already has members in the base-table called `_base` or `extend` and I do not want to use these methods. What can I do?**
+**My class already has members in the base-table called `_base` or `extend` and I do not want to use these methods.**
 There is another feature of base-tables for disabling all this. You can set `_disableInternal` to `true`, and these special members will be disabled. If you are *also* using `_disableInternal`, then just change it after you've used the `create` function.
 ```lua
 function MyClass.new(name)
@@ -93,4 +93,16 @@ function MyClass.new(name)
 		_disableInternal = true,
 	})
 end
+```
+**I prefer to just call a class as a function instead of adding a `new` function.**
+Roclass already adds this feature internally. When a class is called as a function, it will check the class for a `new` function, and if it exists, it will be called
+```lua
+function MyClass.new(name)
+	local self = MyClass:create({
+		name = name
+	})
+end
+```
+```lua
+local myObject = MyClass("MyObject")
 ```
