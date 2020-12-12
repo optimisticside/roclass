@@ -60,6 +60,10 @@ local function create(baseTable, class)
 	for member, value in pairs(class) do
 		metaTable[member] = value
 	end
+	
+	for member, value in pairs(baseTable._base or {}) do
+		metaTable[member] = value
+	end
 
 	return setmetatable(baseTable, metaTable)
 end
