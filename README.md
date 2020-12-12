@@ -1,5 +1,5 @@
 <center> <h1>Roclass</h1></center>
-Roclass is an extrimely lightweight, simple framework for object-oriented programming written in lua. It supports class extension, properties, and provides a clean interface.
+Roclass is an extremely lightweight, simple framework for object-oriented programming written in lua. It supports class extension, properties, and provides a clean interface.
 
 ## Usage
 When the Roclass module is required, it will return a class-creation function. There is no need to pass any parameters to this function, but the first parameter is for the class's name. This is useful for when printing an object of the class.
@@ -86,4 +86,11 @@ function MyClass.new(name)
 end
 ```
 **My class already has members in the base-table called `_base` or `extend` and I do not want to use these methods. What can I do?**
-There is another feature of base-tables for disabling all this. You can set `_disableInternal` to `true`, and these special members will be disabled.
+There is another feature of base-tables for disabling all this. You can set `_disableInternal` to `true`, and these special members will be disabled. If you are *also* using `_disableInternal`, then just change it after you've used the `create` function.
+```lua
+function MyClass.new(name)
+	local self = MyClass:create({
+		_disableInternal = true,
+	})
+end
+```
