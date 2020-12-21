@@ -1,4 +1,4 @@
-local function create(baseTable, class)
+function create(baseTable, class)
 	local specialFields = {
 		class = class,
 	}
@@ -74,7 +74,7 @@ local function create(baseTable, class)
 	return setmetatable(baseTable or {}, metaTable)
 end
 
-local function class(name, ...)
+function class(name, ...)
 	local extends = {...}
 
 	local class = {
@@ -82,7 +82,10 @@ local function class(name, ...)
 		extends = extends,
 		create = function(class, baseTable)
 			return create(baseTable, class)
-		end
+		end,
+		extend = function(baseClass, className, ...)
+			return class(className, baseClass, ...)
+		end,
 	}
 
 	return setmetatable(class, {
